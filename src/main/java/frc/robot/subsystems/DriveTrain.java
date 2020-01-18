@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.commands.ExampleCommand;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.Drive;
+import edu.wpi.first.wpilibj.MotorSafety;
 
 public class DriveTrain extends SubsystemBase {
   /**
@@ -33,6 +34,7 @@ public class DriveTrain extends SubsystemBase {
   private CANEncoder encoderFL, encoderFR, encoderBL, encoderBR;
   public DifferentialDrive daryl;
   private SpeedControllerGroup leftdrive, rightdrive;
+ 
 
   
 
@@ -46,13 +48,15 @@ public class DriveTrain extends SubsystemBase {
     /* encoders have to be contructed seperately in order to afford the stuttering problem that
     occured in the Pre-Season of 2020. See documentation in the log for more 
     details regarding the encoder problem. 
-
+  
     
     */
    // leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
    // rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
 
-    
+  
+
+
     encoderFL = sparkFL.getEncoder();
     encoderFR = sparkFR.getEncoder();
     encoderBL = sparkBL.getEncoder();
@@ -63,16 +67,17 @@ public class DriveTrain extends SubsystemBase {
 
    
     //daryl = new DifferentialDrive(leftdrive, rightdrive);
-    
+    leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
+    rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
+    daryl = new DifferentialDrive(leftdrive, rightdrive);
   }
 
   public void regDrive(double speedL, double speedR)
   {
  //   Daryl = new DifferentialDrive(leftdrive, rightdrive);
- leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
-    rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
-    daryl = new DifferentialDrive(leftdrive, rightdrive);
+    
     daryl.tankDrive(speedL, speedR);
+
   }
 
   public double getWheelPosFL()
@@ -101,13 +106,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-  
+  public void periodic() 
+  {
+   // setDefaultCommand(new Drive(getXboxXSpeed(), getXboxYSpeed()));
   }
 
-  public void initDefaultCommand()
-	{
-		setDefaultCommand(new Drive());
-	}
 
 }

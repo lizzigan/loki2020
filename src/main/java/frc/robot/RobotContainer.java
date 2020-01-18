@@ -37,64 +37,70 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  public Drive driving = new Drive();
-  public Joystick xbox;
+  public static DriveTrain m_drive;
+  public static TestMotot m_spin;
+  
+  public static Joystick xbox;
   public Button a;
   public Button b;
   public JoystickButton lmove;
   public JoystickButton rmove;
   public JoystickButton mistake;
-
+  public Drive driving;
+  // setDefaultCommand(new Drive());
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() 
-  {
-    // Configure the button bindings
-    xbox = new Joystick(1);
-    rmove = new JoystickButton(xbox,1);
-    lmove = new JoystickButton(xbox,5);
-    mistake = new JoystickButton(xbox, 2);
-   
+  public RobotContainer() {
+    m_drive = new DriveTrain();
+    m_spin = new TestMotot();
+    // driving = new Drive(getXboxXSpeed(), getXboxYSpeed());
 
-
-   // configureButtonBindings();
+    configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  //private void configureButtonBindings() {
-  
- //   a.whenPressed(new Spin());
+  private void configureButtonBindings() {
 
-    
- // }
+    // a.whenPressed(new Spin());
+    xbox = new Joystick(1);
+    rmove = new JoystickButton(xbox, 1);
+    lmove = new JoystickButton(xbox, 5);
+    mistake = new JoystickButton(xbox, 2);
+    m_drive.setDefaultCommand(new Drive());
 
-  public double getXboxYSpeed()
-  {
-    // if the y axis is more pushed more than a certain amount then (to account for drivers accidentally
-    // pressing on buttons) then the raw axis will be returned. That value will then be used to drive 
-    // the robot. otherwise the it will return 0 and it will not move. 1 is the Y Axis on the xbox controller
-    if(Math.abs(xbox.getRawAxis(1)) >= .2)
-    {
-        return xbox.getRawAxis(1);
+  }
+
+  public static double getXboxYSpeed() {
+    // if the y axis is more pushed more than a certain amount then (to account for
+    // drivers accidentally
+    // pressing on buttons) then the raw axis will be returned. That value will then
+    // be used to drive
+    // the robot. otherwise the it will return 0 and it will not move. 1 is the Y
+    // Axis on the xbox controller
+    if (Math.abs(xbox.getRawAxis(1)) >= .2) {
+      SmartDashboard.putNumber("Yaxis", xbox.getRawAxis(1));
+      return (xbox.getRawAxis(1));
     }
     return 0.0;
   }
 
-  public double getXboxXSpeed()
-  {
-    // if the x axis is more pushed more than a certain amount then (to account for drivers accidentally
-    // pressing on buttons) then the raw axis will be returned. That value will then be used to drive 
-    // the robot. otherwise the it will return 0 and it will not move. 0 is the x Axis on the xbox controller
-    if(Math.abs(xbox.getRawAxis(5)) >= .2)
+  public static double getXboxXSpeed() {
+    // if the x axis is more pushed more than a certain amount then (to account for
+    // drivers accidentally
+    // pressing on buttons) then the raw axis will be returned. That value will then
+    // be used to drive
+    // the robot. otherwise the it will return 0 and it will not move. 0 is the x
+    // Axis on the xbox controller
+    if (Math.abs(xbox.getRawAxis(5)) >= .2)
     {
-        return xbox.getRawAxis(5);
+        return (xbox.getRawAxis(5));
     }
     return 0.0;
   }
@@ -108,5 +114,10 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public Command getDrive()
+  {
+    return driving;
   }
 }

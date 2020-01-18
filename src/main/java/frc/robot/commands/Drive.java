@@ -17,10 +17,14 @@ public class Drive extends CommandBase {
   /**
    * Creates a new Drive.
    */
-  double xs, ys, zs;
-  public Drive() {
+  public double xs, ys;
+  
+  public Drive()
+  {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_drive);
+    addRequirements(RobotContainer.m_drive);
+   
+
   }
 
   // Called when the command is initially scheduled.
@@ -34,9 +38,9 @@ public class Drive extends CommandBase {
   @Override
   public void execute()
   {
-    xs = Robot.m_roboCon.getXboxXSpeed();
-    ys = Robot.m_roboCon.getXboxYSpeed();
-    Robot.m_drive.regDrive(xs, ys);
+    xs = RobotContainer.getXboxXSpeed();
+    ys = RobotContainer.getXboxYSpeed();
+    RobotContainer.m_drive.regDrive(xs, ys);
   
 
   }

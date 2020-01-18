@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 public class Spin extends CommandBase {
   /**
@@ -18,7 +19,7 @@ public class Spin extends CommandBase {
   public Timer time;
   public Spin() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_spin);
+    addRequirements(RobotContainer.m_spin);
   }
 
   // Called when the command is initially scheduled.
@@ -33,11 +34,11 @@ public class Spin extends CommandBase {
   {
     if(time.get() < 0.25)
     { 
-       Robot.m_spin.runMotor(0.25);
+       RobotContainer.m_spin.runMotor(0.25);
     }
     else
     {
-      Robot.m_spin.runMotor(0);
+      RobotContainer.m_spin.runMotor(0);
     }
   }
 
@@ -46,7 +47,7 @@ public class Spin extends CommandBase {
   public void end(boolean interrupted) {
     if(interrupted)
     {
-      Robot.m_spin.runMotor(0);
+      RobotContainer.m_spin.runMotor(0);
     }
 
   }
