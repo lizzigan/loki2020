@@ -18,9 +18,9 @@ package frc.robot;
 public final class Constants {
 
     // current values are standins for the real thing. -1/9/20
-    public static int SPARKFL = 1;
-    public static int SPARKFR = 3;
-    public static int SPARKBL = 4;
-    public static int SPARKBR = 2;
+    public static int SPARKFL = 6;
+    public static int SPARKFR = 8;
+    public static int SPARKBL = 5;
+    public static int SPARKBR = 4;
    // public static int SPINPORT = 0;
 }

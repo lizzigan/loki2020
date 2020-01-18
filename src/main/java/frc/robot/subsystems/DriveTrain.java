@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import frc.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import frc.robot.commands.Drive;
 
 public class DriveTrain extends SubsystemBase {
   /**
@@ -28,8 +31,9 @@ public class DriveTrain extends SubsystemBase {
    */
   private CANSparkMax sparkFL, sparkFR, sparkBL, sparkBR;
   private CANEncoder encoderFL, encoderFR, encoderBL, encoderBR;
-  private DifferentialDrive Daryl;
+  public DifferentialDrive daryl;
   private SpeedControllerGroup leftdrive, rightdrive;
+
   
 
   public DriveTrain() 
@@ -42,23 +46,33 @@ public class DriveTrain extends SubsystemBase {
     /* encoders have to be contructed seperately in order to afford the stuttering problem that
     occured in the Pre-Season of 2020. See documentation in the log for more 
     details regarding the encoder problem. 
+
+    
     */
-    leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
-    rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
+   // leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
+   // rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
 
-
+    
     encoderFL = sparkFL.getEncoder();
     encoderFR = sparkFR.getEncoder();
     encoderBL = sparkBL.getEncoder();
     encoderBR = sparkBR.getEncoder();
 
+    //setDefaultCommand(new Drive());
+   // Daryl = new DifferentialDrive(leftdrive, rightdrive);
+
+   
+    //daryl = new DifferentialDrive(leftdrive, rightdrive);
     
   }
 
   public void regDrive(double speedL, double speedR)
   {
-    Daryl = new DifferentialDrive(leftdrive, rightdrive);
-    Daryl.tankDrive(speedL, speedR);
+ //   Daryl = new DifferentialDrive(leftdrive, rightdrive);
+ leftdrive = new SpeedControllerGroup(sparkFL, sparkBL);
+    rightdrive = new SpeedControllerGroup(sparkFR, sparkBR);
+    daryl = new DifferentialDrive(leftdrive, rightdrive);
+    daryl.tankDrive(speedL, speedR);
   }
 
   public double getWheelPosFL()
@@ -88,6 +102,12 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+  
   }
+
+  public void initDefaultCommand()
+	{
+		setDefaultCommand(new Drive());
+	}
+
 }

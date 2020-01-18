@@ -37,6 +37,7 @@ public class Drive extends CommandBase {
     xs = Robot.m_roboCon.getXboxXSpeed();
     ys = Robot.m_roboCon.getXboxYSpeed();
     Robot.m_drive.regDrive(xs, ys);
+  
 
   }
 

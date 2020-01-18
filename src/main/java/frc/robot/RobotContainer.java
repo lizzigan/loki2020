@@ -37,12 +37,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final DriveTrain m_drive = new DriveTrain();
+  public Drive driving = new Drive();
   public Joystick xbox;
   public Button a;
   public Button b;
   public JoystickButton lmove;
   public JoystickButton rmove;
+  public JoystickButton mistake;
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -53,6 +55,10 @@ public class RobotContainer {
     xbox = new Joystick(1);
     rmove = new JoystickButton(xbox,1);
     lmove = new JoystickButton(xbox,5);
+    mistake = new JoystickButton(xbox, 2);
+   
+
+
    // configureButtonBindings();
   }
 
@@ -90,7 +96,7 @@ public class RobotContainer {
     {
         return xbox.getRawAxis(5);
     }
-    return -0.0;
+    return 0.0;
   }
 
 
